@@ -33,13 +33,13 @@ if (NOT USE_MINIZ)
     find_package(ZLIB)
 endif (NOT USE_MINIZ)
 
-set(LIB_CFLAGS "-pedantic -Wall -Werror=strict-prototypes -Werror=old-style-definition -Werror=missing-prototypes")
+set(LIB_CFLAGS "-pedantic")
 
 if (NOT USE_MINIZ)
-    list(APPEND ${LIB_CFLAGS} "-Werror")
+    list(APPEND ${LIB_CFLAGS} "")
 endif (NOT USE_MINIZ)
 
-set(EXAMPLE_CFLAGS "-pedantic -Werror -Wall")
+set(EXAMPLE_CFLAGS "-pedantic")
 #include_directories("${PROJECT_SOURCE_DIR}/include")
 
 add_library(tmxparser_static STATIC ${SOURCES} ${HEADERS})
@@ -53,7 +53,8 @@ set_target_properties(tmxparser PROPERTIES
   VERSION ${VERSION}
   COMPILE_FLAGS ${LIB_CFLAGS})
 
-target_link_libraries(tmxparser ${TINYXML2_LIBRARIES})
+target_link_libraries(tmxparser debug ${TINYXML2_LIBRARY_DEBUG})
+target_link_libraries(tmxparser optimized ${TINYXML2_LIBRARY_RELEASE})
 include_directories(${TINYXML2_INCLUDE_DIR})
 
 if (NOT USE_MINIZ)
