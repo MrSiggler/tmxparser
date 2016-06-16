@@ -67,8 +67,8 @@ namespace Tmx
         // Read the attributes.
         name = tileLayerElem->Attribute("name");
 
-        tileLayerElem->QueryIntAttribute("x", &x);
-        tileLayerElem->QueryIntAttribute("y", &y);
+        tileLayerElem->QueryFloatAttribute("offsetx", &offsetx);
+        tileLayerElem->QueryFloatAttribute("offsety", &offsety);
 
         tileLayerElem->QueryFloatAttribute("opacity", &opacity);
         tileLayerElem->QueryBoolAttribute("visible", &visible);

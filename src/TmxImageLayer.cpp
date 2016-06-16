@@ -51,8 +51,8 @@ namespace Tmx
         // Read all the attributes into local variables.
         name = imageLayerElem->Attribute("name");
 
-        imageLayerElem->QueryIntAttribute("x", &x);
-        imageLayerElem->QueryIntAttribute("y", &y);
+        imageLayerElem->QueryFloatAttribute("offsetx", &offsetx);
+        imageLayerElem->QueryFloatAttribute("offsety", &offsety);
 
         imageLayerElem->QueryFloatAttribute("opacity", &opacity);
         imageLayerElem->QueryBoolAttribute("visible", &visible);

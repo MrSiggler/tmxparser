@@ -55,6 +55,9 @@ namespace Tmx
         // Read the object group attributes.
         name = objectGroupElem->Attribute("name");
 
+        objectGroupElem->QueryFloatAttribute("offsetx", &offsetx);
+        objectGroupElem->QueryFloatAttribute("offsety", &offsety);
+
         if (objectGroupElem->Attribute("color"))
         {
             color = objectGroupElem->Attribute("color");

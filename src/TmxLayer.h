@@ -57,7 +57,7 @@ namespace Tmx
         Layer(const Layer &_layer);
 
     public:
-        Layer(const Tmx::Map *_map, const std::string _name, const int _x, const int _y, const int _width, const int _height, const float _opacity, const bool _visible, const LayerType _layerType);
+        Layer(const Tmx::Map *_map, const std::string _name, const float _offsetx, const float _offsety, const int _width, const int _height, const float _opacity, const bool _visible, const LayerType _layerType);
         virtual ~Layer();
 
         // Parse a layer element.
@@ -70,10 +70,10 @@ namespace Tmx
         const std::string &GetName() const { return name; }
 
         // Get the value of the x attribute of the layer. Means different things for different layer types.
-        int GetX() const { return x; }
+        float GetOffsetX() const { return offsetx; }
 
         // Get the value of the y attribute of the layer. Means different things for different layer types.
-        int GetY() const { return y; }
+        float GetOffsetY() const { return offsety; }
 
         // Get the width of the layer, in tiles. Only used in tile layers.
         int GetWidth() const { return width; }
@@ -106,8 +106,8 @@ namespace Tmx
 
         std::string name;
         
-        int x;
-        int y;
+        float offsetx;
+        float offsety;
         int width;
         int height;
     
