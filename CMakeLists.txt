@@ -70,7 +70,6 @@ include_directories("${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/src")
 
 install(FILES ${HEADERS} DESTINATION include/tmxparser)
-install(TARGETS tmxparser tmxparser_static DESTINATION lib)
 
 configure_file(src/tmxparser.pc.in tmxparser.pc @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/tmxparser.pc DESTINATION lib/pkgconfig)
