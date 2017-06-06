@@ -265,6 +265,7 @@ namespace Tmx
         Tmx::PropertySet properties;
 
         // Parse a 'map' node.
-        void Parse(tinyxml2::XMLNode *mapNode);
+        void Parse(const tinyxml2::XMLNode *mapNode);
+        void ParseLayers(const tinyxml2::XMLNode *mapNode);
     };
 }

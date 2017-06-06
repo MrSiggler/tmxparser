@@ -202,9 +202,65 @@ namespace Tmx
         return NULL;
     }
 
-    void Map::Parse(tinyxml2::XMLNode *mapNode)
+    void Map::ParseLayers(const tinyxml2::XMLNode *node)
     {
-        tinyxml2::XMLElement* mapElem = mapNode->ToElement();
+    	//const tinyxml2::XMLElement* mapElem = mapNode->ToElement();
+    	//const tinyxml2::XMLNode *node = mapElem->FirstChild();
+
+        // Iterate through all of the "layer" (tile layer) elements.           
+        if( strcmp( node->Value(), "layer" ) == 0 )
+        {
+            // Allocate a new tile layer and parse it.
+            TileLayer *tileLayer = new TileLayer(this);
+            tileLayer->Parse(node);
+
+            // Add the tile layer to the lists.
+            tile_layers.push_back(tileLayer);
+            layers.push_back(tileLayer);
+        }
+
+        // Iterate through all of the "imagelayer" (image layer) elements.            
+        if( strcmp( node->Value(), "imagelayer" ) == 0 )
+        {
+            // Allocate a new image layer and parse it.
+            ImageLayer *imageLayer = new ImageLayer(this);
+            imageLayer->Parse(node);
+
+            // Add the image layer to the lists.
+            image_layers.push_back(imageLayer);
+            layers.push_back(imageLayer);
+        }
+
+        // Iterate through all of the "objectgroup" (object layer) elements.
+        if( strcmp( node->Value(), "objectgroup" ) == 0 )
+        {
+            // Allocate a new object group and parse it.
+            ObjectGroup *objectGroup = new ObjectGroup(this);
+            objectGroup->Parse(node);
+    
+            // Add the object group to the lists.
+            object_groups.push_back(objectGroup);
+            layers.push_back(objectGroup);
+        }
+
+        if( strcmp( node->Value(), "group" ) == 0 )
+        {
+	        const tinyxml2::XMLNode *groupNode = node->FirstChildElement();
+	        while (groupNode) 
+	        {
+	            ParseLayers(groupNode);
+
+	            //objectNode = objectGroupNode->IterateChildren("object", objectNode); -- FIXME MAYBE
+	            groupNode = groupNode->NextSiblingElement();
+	        }        	
+        	//const tinyxml2::XMLNode *groupNode = node->FirstChildElement();
+           // ParseLayers(groupNode);
+        }   
+    }
+
+    void Map::Parse(const tinyxml2::XMLNode *mapNode)
+    {
+        const tinyxml2::XMLElement* mapElem = mapNode->ToElement();
 
         // Read the map attributes.
         version = mapElem->IntAttribute("version");
@@ -316,8 +372,10 @@ namespace Tmx
                 tilesets.push_back(tileset);
             }
 
+            ParseLayers(node);
+
             // Iterate through all of the "layer" (tile layer) elements.           
-            if( strcmp( node->Value(), "layer" ) == 0 )
+            /*if( strcmp( node->Value(), "layer" ) == 0 )
             {
                 // Allocate a new tile layer and parse it.
                 TileLayer *tileLayer = new TileLayer(this);
@@ -351,6 +409,11 @@ namespace Tmx
                 object_groups.push_back(objectGroup);
                 layers.push_back(objectGroup);
             }
+
+            if( strcmp( node->Value(), "group" ) == 0 )
+            {
+                
+            }   */         
 
             node = node->NextSibling();
         }
